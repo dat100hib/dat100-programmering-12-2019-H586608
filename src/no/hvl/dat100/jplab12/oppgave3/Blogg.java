@@ -2,49 +2,93 @@ package no.hvl.dat100.jplab12.oppgave3;
 
 import no.hvl.dat100.jplab12.common.TODO;
 import no.hvl.dat100.jplab12.oppgave1.*;
+import no.hvl.dat100.jplab12.oppgave2.Tekst;
+import no.hvl.dat100.jplab12.oppgave2.Bilde;
 
 public class Blogg {
 
-	// TODO: objektvariable 
+	private Innlegg[] tabell;
+	private int antall;
 
 	public Blogg() {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		tabell = new Innlegg[20];
+		this.antall = 0;
+		
 	}
 
 	public Blogg(int lengde) {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		tabell = new Innlegg [lengde];
+		this.antall= 0;
+		
 	}
 
 	public int getAntall() {
-		throw new UnsupportedOperationException(TODO.method());
+		return antall;
 	}
 	
 	public Innlegg[] getSamling() {
-		throw new UnsupportedOperationException(TODO.method());
-
+		return tabell;
 	}
 	
 	public int finnInnlegg(Innlegg innlegg) {
 
-		throw new UnsupportedOperationException(TODO.method());
+		int pos = -1;
+		//boolean funnet = false;
+		
+		for (int i = 0; i <antall && pos ==-1; i++) {
+			if (tabell[i] != null && innlegg.erLik(tabell[i])) {
+				
+				pos = i;
+			}
+		}
+		return pos;
+		
 	}
 
 	public boolean finnes(Innlegg innlegg) {
-		throw new UnsupportedOperationException(TODO.method());
+		
+		boolean finnes = false;
+		
+		for (int i = 0; i < antall; i++) {
+			if (tabell[i] != null && innlegg.getId() == tabell[i].getId()) {
+				finnes = true;
+				
+			}
+		}
+		return finnes; 
+		
 	}
+		
+	
 
 	public boolean ledigPlass() {
-		throw new UnsupportedOperationException(TODO.method());
-
+		return (antall < tabell.length);
 	}
 	
 	public boolean leggTil(Innlegg innlegg) {
+				if (!finnes(innlegg) && ledigPlass()) {
+			tabell [antall] = innlegg;
+			antall++;
+			return true;
+		}
+		
+		else return false;
 
-		throw new UnsupportedOperationException(TODO.method());
 	}
 	
 	public String toString() {
-		throw new UnsupportedOperationException(TODO.method());
+		String str = antall + "\n";
+		for (int i = 0; i < antall; i++) {
+		if (tabell[i] instanceof Bilde) {
+			Bilde bildeObj = (Bilde) tabell[i];
+			str += bildeObj.toString();
+		} else {
+			Tekst tekstObj = (Tekst) tabell[i];
+			str += tekstObj.toString();
+			
+		}
+		}
+		return str;
 	}
 
 	// valgfrie oppgaver nedenfor
